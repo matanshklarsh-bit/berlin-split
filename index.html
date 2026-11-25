@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ברלין 💸</title>
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ברלין 💸">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap">
+<style>
+:root{--ink:#111;--mute:#6B6B6B;--line:#E8E8E8;--blue:#2F5BEA;--green:#047857;--orange:#B45309}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#fff;color:var(--ink);font-family:'Heebo',system-ui,sans-serif}
+button,input{font-family:inherit}
+button{cursor:pointer}
+#app{max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+.page{flex:1;padding:calc(20px + env(safe-area-inset-top)) 22px 16px;display:flex;flex-direction:column}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.h1{font-size:26px;font-weight:800;margin:0}
+.mute{color:var(--mute)}
+.sm{font-size:14px}.xs{font-size:13px}
+.av{width:40px;height:40px;border-radius:20px;color:#fff;font-weight:700;font-size:17px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.av.s{width:28px;height:28px;font-size:14px}
+.total{margin-top:20px;background:var(--blue);color:#fff;border-radius:22px;padding:20px}
+.total .big{font-size:46px;font-weight:800;letter-spacing:-1px;line-height:1.1}
+.total .lt{color:#DCE4FF}
+.bar{display:flex;gap:5px;height:8px;margin-top:12px}
+.bar div{border-radius:4px;min-width:6px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.card{border:1px solid var(--line);border-radius:18px;padding:16px}
+.card .v{font-size:26px;font-weight:700;margin-top:2px}
+.bal{margin-top:14px;border-radius:18px;padding:18px}
+.bal .v{font-size:30px;font-weight:800}
+.bal .ln{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:15px}
+.who{display:flex;align-items:center;gap:8px}
+.primary{display:flex;align-items:center;justify-content:center;gap:10px;height:64px;width:100%;border:0;border-radius:20px;background:var(--blue);color:#fff;font-size:20px;font-weight:700}
+.primary:disabled{opacity:.5}
+.grow{flex:1;min-height:16px}
+nav{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);background:#fff;position:sticky;bottom:0}
+nav button{height:64px;border:0;background:none;font-size:15px;color:var(--mute)}
+nav button.on{color:var(--blue);font-weight:700}
+.lbl{font-size:14px;color:var(--mute);margin:18px 0 8px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.chip{height:50px;border-radius:14px;border:2px solid transparent;font-size:16px;font-weight:500}
+.chip.on{font-weight:700}
+.amt{width:100%;border:0;outline:0;font-size:52px;font-weight:800;letter-spacing:-1px;padding:0;background:none;color:var(--ink);direction:ltr;text-align:right}
+.amt::placeholder{color:#CFCFCF}
+.seg{display:flex;background:#F3F3F3;border-radius:14px;padding:4px;flex-shrink:0}
+.seg button{width:54px;height:46px;border:0;border-radius:11px;background:none;font-size:19px;font-weight:700;color:var(--mute)}
+.seg button.on{background:var(--blue);color:#fff}
+.txt{width:100%;height:50px;border:1px solid #E0E0E0;border-radius:14px;padding:0 14px;font-size:16px}
+.x{width:44px;height:44px;border-radius:22px;border:0;background:#F3F3F3;display:flex;align-items:center;justify-content:center}
+.pills{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.pill{height:40px;padding:0 16px;border-radius:20px;border:1px solid #E0E0E0;background:#fff;font-size:15px}
+.pill.on{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+.day{font-size:14px;font-weight:700;color:var(--mute);margin-top:22px}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #EFEFEF;width:100%;background:none;border-top:0;border-left:0;border-right:0;text-align:right;font-size:inherit;color:inherit}
+.ic{width:40px;height:40px;border-radius:12px;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.it{font-size:17px;font-weight:500}
+.am{font-size:18px;font-weight:700;text-align:left;white-space:nowrap}
+.tr{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:10px}
+.paid{height:44px;padding:0 16px;border-radius:14px;border:0;background:#F3F3F3;color:var(--ink);font-size:15px;font-weight:700}
+.paid.on{background:#E9F8F1;color:var(--green)}
+.link{background:none;border:0;color:var(--blue);font-size:15px;padding:10px;font-weight:500}
+.banner{margin-top:14px;background:#F3F3F3;border-radius:14px;padding:10px 14px;font-size:14px}
+.empty{text-align:center;color:var(--mute);margin-top:40px;font-size:16px}
+#toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:14px;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90%;text-align:center;z-index:9}
+#toast.on{opacity:1}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
+  collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc, setDoc, getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ---------- Config ----------
+const firebaseConfig = {
+  apiKey: "AIzaSyCgBQOWXlwy6lHjDaxDUxOyWWfn5uKEot0",
+  authDomain: "berlin-trip-bf53d.firebaseapp.com",
+  projectId: "berlin-trip-bf53d",
+  storageBucket: "berlin-trip-bf53d.firebasestorage.app",
+  messagingSenderId: "888882235560",
+  appId: "1:888882235560:web:eefa5b2ab2394d6b6d5a9d"
+};
+const TRIP = 'trips/berlin-x7k2';
+const TRIP_START = '2026-12-02';
+const FALLBACK_RATE = 3.8;
+
+const PEOPLE = {
+  ofir: { name: 'אופיר', l: 'א', c: '#2F5BEA', t: '#EEF2FF', b: '#C7D4FB', bar: '#FFFFFF' },
+  roni: { name: 'רוני',  l: 'ר', c: '#C2410C', t: '#FFF1E8', b: '#FDD5BC', bar: '#FDBA8C' },
+  tali: { name: 'טלי',   l: 'ט', c: '#0F766E', t: '#E6F7F4', b: '#B5E8E0', bar: '#7EE0D3' }
+};
+const IDS = Object.keys(PEOPLE);
+const CATS = {
+  food:     { name: 'אוכל',     t: '#FFF1E8', c: '#C2410C' },
+  transport:{ name: 'תחבורה',   t: '#EAF0FF', c: '#1D4ED8' },
+  lodging:  { name: 'לינה',     t: '#F3EDFF', c: '#6D28D9' },
+  fun:      { name: 'אטרקציות', t: '#FDECF4', c: '#BE185D' },
+  shopping: { name: 'קניות',    t: '#E6F7F4', c: '#0F766E' },
+  other:    { name: 'אחר',      t: '#F3F3F3', c: '#404040' }
+};
+
+const params = new URLSearchParams(location.search);
+const me = params.get('me');
+const isAdmin = params.has('admin');
+const $app = document.getElementById('app');
+
+// ---------- Helpers ----------
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad = (n) => String(n).padStart(2, '0');
+const isoDate = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const eur = (n) => '€' + (Math.round(n * 100) / 100).toLocaleString('en-US', { maximumFractionDigits: Math.abs(n) >= 100 ? 0 : 2 });
+const ils = (n) => '₪' + Math.round(n).toLocaleString('en-US');
+const money = (n, cur) => `<span class="ltr">${cur === 'ILS' ? ils(n) : eur(n)}</span>`;
+const avatar = (id, small) => `<span class="av${small ? ' s' : ''}" style="background:${PEOPLE[id].c}">${PEOPLE[id].l}</span>`;
+const WD = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'];
+function dayLabel(day) {
+  const d = new Date(day + 'T12:00:00');
+  const s = `יום ${WD[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}`;
+  return day === isoDate(new Date()) ? 'היום · ' + s : s;
+}
+function tripLabel() {
+  const start = new Date(TRIP_START + 'T00:00:00');
+  const today = new Date(isoDate(new Date()) + 'T00:00:00');
+  const diff = Math.round((today - start) / 864e5);
+  if (diff === -1) return 'מחר טסות ✈️';
+  if (diff < 0) return `עוד ${-diff} ימים לטיסה`;
+  return `ברלין · יום ${diff + 1}`;
+}
+let toastTimer;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('on'), 2600);
+}
+function lsGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+
+// ---------- State ----------
+const state = { expenses: [], meta: {}, rate: lsGet('rate'), view: 'home', filter: 'all', form: null, loaded: false };
+
+// ---------- Firebase ----------
+const fb = initializeApp(firebaseConfig);
+const db = initializeFirestore(fb, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) });
+const expCol = collection(db, TRIP, 'expenses');
+const metaDoc = doc(db, TRIP, 'meta', 'state');
+const fail = (e) => { console.error(e); toast('שגיאה בשמירה – נסי שוב'); };
+
+// ---------- Exchange rate (Bank of Israel representative rate) ----------
+function pickBoi(j) {
+  if (!j) return null;
+  if (typeof j.currentExchangeRate === 'number') return { value: j.currentExchangeRate, date: (j.lastUpdate || '').slice(0, 10) };
+  const list = j.exchangeRates || j.ExchangeRates || (Array.isArray(j) ? j : null);
+  const e = list && list.find((x) => (x.key || x.Key) === 'EUR');
+  if (e) return { value: e.currentExchangeRate ?? e.CurrentExchangeRate, date: String(e.lastUpdate ?? e.LastUpdate ?? '').slice(0, 10) };
+  return null;
+}
+async function getJson(url) {
+  const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 6000);
+  try { const r = await fetch(url, { signal: ctl.signal }); if (!r.ok) throw 0; return await r.json(); }
+  finally { clearTimeout(t); }
+}
+async function fetchRate(force) {
+  const today = isoDate(new Date());
+  if (!force && state.rate && state.rate.fetched === today) return state.rate;
+  let got = null;
+  for (const url of ['https://boi.org.il/PublicApi/GetExchangeRate?key=EUR&asJson=true', 'https://boi.org.il/PublicApi/GetExchangeRates?asJson=true']) {
+    try { const r = pickBoi(await getJson(url)); if (r && r.value > 2 && r.value < 7) { got = { ...r, source: 'שער יציג – בנק ישראל' }; break; } } catch {}
+  }
+  if (!got) {
+    try { const j = await getJson('https://api.frankfurter.app/latest?from=EUR&to=ILS'); if (j?.rates?.ILS) got = { value: j.rates.ILS, date: j.date, source: 'שער ECB (בנק ישראל לא זמין)' }; } catch {}
+  }
+  if (got) {
+    got.fetched = today; state.rate = got; lsSet('rate', got);
+    if (!state.meta.rate || state.meta.rate.fetched !== today) setDoc(metaDoc, { rate: got }, { merge: true }).catch(() => {});
+    return got;
+  }
+  return state.rate || state.meta.rate || null;
+}
+function rateNow() {
+  if (state.meta.locked && state.meta.lockedRate) return state.meta.lockedRate;
+  return state.rate?.value || state.meta.rate?.value || FALLBACK_RATE;
+}
+
+// ---------- Calculations ----------
+const conv = (e, cur, r) => e.currency === cur ? e.amount : (cur === 'ILS' ? e.amount * r : e.amount / r);
+function compute(cur, r = rateNow()) {
+  const paid = {}, share = {}, bal = {}; let total = 0;
+  IDS.forEach((p) => { paid[p] = 0; share[p] = 0; });
+  for (const e of state.expenses) {
+    const v = conv(e, cur, r);
+    const split = (e.split || []).filter((p) => PEOPLE[p]);
+    if (!split.length || !PEOPLE[e.payer]) continue;
+    total += v; paid[e.payer] += v;
+    split.forEach((p) => { share[p] += v / split.length; });
+  }
+  IDS.forEach((p) => { bal[p] = paid[p] - share[p]; });
+  return { total, paid, share, bal, transfers: settle(bal, cur === 'ILS' ? 1 : 0.01) };
+}
+function settle(bal, eps) {
+  const cred = IDS.filter((p) => bal[p] > eps).map((p) => ({ p, v: bal[p] })).sort((a, b) => b.v - a.v);
+  const debt = IDS.filter((p) => bal[p] < -eps).map((p) => ({ p, v: -bal[p] })).sort((a, b) => b.v - a.v);
+  const out = []; let i = 0, j = 0;
+  while (i < debt.length && j < cred.length) {
+    const v = Math.min(debt[i].v, cred[j].v);
+    if (v > eps) out.push({ from: debt[i].p, to: cred[j].p, v });
+    debt[i].v -= v; cred[j].v -= v;
+    if (debt[i].v <= eps) i++;
+    if (cred[j].v <= eps) j++;
+  }
+  return out;
+}
+
+// ---------- Views ----------
+const navHtml = () => `<nav>
+  <button data-act="go" data-v="home" class="${state.view === 'home' ? 'on' : ''}">הבית</button>
+  <button data-act="go" data-v="list" class="${state.view === 'list' ? 'on' : ''}">הוצאות</button>
+  <button data-act="go" data-v="settle" class="${state.view === 'settle' ? 'on' : ''}">סגירת חשבון</button>
+</nav>`;
+
+function viewPicker() {
+  return `<div class="page" style="justify-content:center;gap:14px">
+    <h1 class="h1" style="text-align:center">מי את?</h1>
+    <p class="mute" style="text-align:center;margin:0 0 10px">בחרי פעם אחת, ואז הוסיפי למסך הבית</p>
+    ${IDS.map((id) => `<a href="?me=${id}" class="primary" style="background:${PEOPLE[id].c};text-decoration:none">${PEOPLE[id].name}</a>`).join('')}
+  </div>`;
+}
+
+function viewHome() {
+  const P = PEOPLE[me];
+  const E = compute('EUR'), I = compute('ILS');
+  const b = E.bal[me];
+  let balHtml;
+  if (!state.expenses.length) {
+    balHtml = `<div class="bal" style="background:#F6F6F6"><div class="sm mute">עוד אין הוצאות. כל הוצאה שתוסיפי תופיע כאן ✨</div></div>`;
+  } else if (b > 0.01) {
+    const lines = E.transfers.filter((t) => t.to === me).map((t) => `<div class="ln"><span class="who">${avatar(t.from, 1)}${PEOPLE[t.from].name} מעבירה לך</span><b>${money(t.v)}</b></div>`).join('');
+    balHtml = `<div class="bal" style="background:#E9F8F1;color:var(--green)"><div style="font-size:15px;font-weight:500">מגיע לך</div>
+      <div class="v">${money(b)} <span style="font-size:16px;font-weight:500">≈ ${money(I.bal[me], 'ILS')}</span></div>
+      <div style="color:var(--ink)">${lines}</div></div>`;
+  } else if (b < -0.01) {
+    const lines = E.transfers.filter((t) => t.from === me).map((t) => `<div class="ln"><span class="who">${avatar(t.to, 1)}ל${PEOPLE[t.to].name}</span><b>${money(t.v)}</b></div>`).join('');
+    balHtml = `<div class="bal" style="background:#FFF4E5;color:var(--orange)"><div style="font-size:15px;font-weight:500">את מעבירה</div>
+      <div class="v">${money(-b)} <span style="font-size:16px;font-weight:500">≈ ${money(-I.bal[me], 'ILS')}</span></div>
+      <div style="color:var(--ink)">${lines}</div></div>`;
+  } else {
+    balHtml = `<div class="bal" style="background:#F6F6F6"><div style="font-size:17px;font-weight:700">את מאוזנת 👌</div><div class="sm mute">לא חייבת ולא מגיע לך כלום</div></div>`;
+  }
+  const bar = E.total > 0 ? `<div class="bar">${IDS.filter((p) => E.paid[p] > 0).map((p) => `<div style="flex:${E.paid[p]};background:${PEOPLE[p].bar}"></div>`).join('')}</div>
+    <div class="row xs lt" style="justify-content:flex-start;gap:14px;margin-top:8px">${IDS.map((p) => `<span>${PEOPLE[p].name} ${money(E.paid[p])}</span>`).join('')}</div>` : '';
+  return `<div class="page">
+    <div class="row"><div class="who">${avatar(me)}<span class="h1">היי ${P.name}</span></div><span class="sm mute">${tripLabel()}</span></div>
+    ${state.meta.locked ? `<div class="banner">🔒 החשבון נסגר בשער ${state.meta.lockedRate.toFixed(3)}</div>` : ''}
+    <div class="total"><div class="sm lt">סה״כ הוצאות הקבוצה</div>
+      <div class="row" style="justify-content:flex-start;align-items:baseline"><span class="big">${money(E.total)}</span><span class="lt" style="font-size:18px">≈ ${money(I.total, 'ILS')}</span></div>
+      ${bar}
+    </div>
+    <div class="cards">
+      <div class="card"><div class="sm mute">שילמתי</div><div class="v">${money(E.paid[me])}</div><div class="xs mute">≈ ${money(I.paid[me], 'ILS')}</div></div>
+      <div class="card"><div class="sm mute">החלק שלי</div><div class="v">${money(E.share[me])}</div><div class="xs mute">≈ ${money(I.share[me], 'ILS')}</div></div>
+    </div>
+    ${balHtml}
+    <div class="grow"></div>
+    <button class="primary" data-act="add"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>הוספת הוצאה</button>
+  </div>${navHtml()}`;
+}
+
+function itemHtml(e) {
+  const C = CATS[e.category] || CATS.other;
+  const split = e.split.length === 3 ? 'שלושתן' : e.split.length === 1 ? (e.split[0] === e.payer ? 'אישית' : 'רק ' + PEOPLE[e.split[0]].name) : e.split.map((p) => PEOPLE[p].name).join(' ו');
+  const mine = e.createdBy === me;
+  const other = e.currency === 'ILS' ? `<div class="xs mute">≈ ${money(e.amount / rateNow())}</div>` : '';
+  return `<button class="item" ${mine ? `data-act="edit" data-id="${e.id}"` : 'disabled style="cursor:default"'}>
+    <div class="who" style="gap:12px;min-width:0"><span class="ic" style="background:${C.t};color:${C.c}">${C.name[0]}</span>
+      <div style="min-width:0"><div class="it">${esc(e.desc || C.name)}</div><div class="sm mute">${C.name} · שילמה ${PEOPLE[e.payer].name} · ${split}</div></div></div>
+    <div><div class="am">${money(e.amount, e.currency)}</div>${other}${mine ? '<div class="xs" style="color:var(--blue);text-align:left">עריכה</div>' : ''}</div>
+  </button>`;
+}
+
+function viewList() {
+  const E = compute('EUR'), I = compute('ILS');
+  let body = '';
+  if (!state.expenses.length) body = `<div class="empty">עוד אין הוצאות</div>`;
+  else if (state.filter === 'cat') {
+    const sums = {}; Object.keys(CATS).forEach((k) => sums[k] = 0);
+    state.expenses.forEach((e) => { sums[e.category in CATS ? e.category : 'other'] += conv(e, 'EUR', rateNow()); });
+    const max = Math.max(...Object.values(sums), 1);
+    body = Object.entries(sums).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]).map(([k, v]) => `
+      <div style="margin-top:16px"><div class="row"><span class="who"><span class="ic" style="background:${CATS[k].t};color:${CATS[k].c};width:32px;height:32px;border-radius:10px;font-size:14px">${CATS[k].name[0]}</span><span class="it">${CATS[k].name}</span></span><b>${money(v)}</b></div>
+      <div style="height:8px;background:#F3F3F3;border-radius:4px;margin-top:8px"><div style="height:8px;border-radius:4px;width:${(v / max) * 100}%;background:${CATS[k].c}"></div></div></div>`).join('');
+  } else {
+    const list = state.filter === 'mine' ? state.expenses.filter((e) => e.payer === me || e.createdBy === me) : state.expenses;
+    const days = {};
+    list.forEach((e) => (days[e.day] = days[e.day] || []).push(e));
+    body = Object.keys(days).sort().reverse().map((d) => `<div class="day">${dayLabel(d)}</div>${days[d].map(itemHtml).join('')}`).join('') || `<div class="empty">אין הוצאות שלך עדיין</div>`;
+  }
+  const pill = (f, t) => `<button class="pill ${state.filter === f ? 'on' : ''}" data-act="filter" data-v="${f}">${t}</button>`;
+  return `<div class="page">
+    <h1 class="h1">כל ההוצאות</h1>
+    <div class="mute" style="font-size:15px">סה״כ ${money(E.total)} ≈ ${money(I.total, 'ILS')} · ${state.expenses.length} הוצאות</div>
+    <div class="pills">${pill('all', 'הכול')}${pill('mine', 'שלי')}${pill('cat', 'לפי קטגוריה')}</div>
+    ${body}
+  </div>${navHtml()}`;
+}
+
+function viewSettle() {
+  const locked = !!state.meta.locked;
+  const I = compute('ILS'), E = compute('EUR');
+  const paid = state.meta.paid || {};
+  const r = rateNow();
+  const rows = IDS.map((p) => {
+    const v = locked ? I.bal[p] : E.bal[p];
+    const cur = locked ? 'ILS' : 'EUR';
+    const col = v > 0.5 ? 'var(--green)' : v < -0.5 ? 'var(--orange)' : 'var(--mute)';
+    const sign = v > 0.5 ? '+' : v < -0.5 ? '−' : '';
+    return `<div class="item" style="cursor:default"><div class="who" style="gap:12px">${avatar(p)}<div><div class="it">${PEOPLE[p].name}</div>
+      <div class="xs mute">שילמה ${money(locked ? I.paid[p] : E.paid[p], cur)} · חלקה ${money(locked ? I.share[p] : E.share[p], cur)}</div></div></div>
+      <div class="am" style="color:${col}"><span class="ltr">${sign}${cur === 'ILS' ? ils(Math.abs(v)) : eur(Math.abs(v))}</span></div></div>`;
+  }).join('');
+  const trs = I.transfers.map((t) => {
+    const key = `${t.from}>${t.to}`; const amt = Math.round(t.v);
+    const done = paid[key] && Math.abs(paid[key] - amt) <= 1;
+    return `<div class="tr"><div><div style="font-size:16px"><b style="color:${PEOPLE[t.from].c}">${PEOPLE[t.from].name}</b> ← <b style="color:${PEOPLE[t.to].c}">${PEOPLE[t.to].name}</b></div>
+      <div style="font-size:22px;font-weight:800">${locked ? '' : '≈ '}${money(amt, 'ILS')}</div></div>
+      <button class="paid ${done ? 'on' : ''}" data-act="paid" data-k="${key}" data-a="${amt}">${done ? 'שולם ✓' : 'סמני ששולם'}</button></div>`;
+  }).join('') || `<div class="sm mute">אין העברות – כולן מאוזנות 👌</div>`;
+  const rateLine = locked
+    ? `שער נעול: ${r.toFixed(3)} (${esc(state.meta.lockedSource || '')}, ${esc(state.meta.lockedDate || '')})`
+    : `שער היום: ${r.toFixed(3)}${state.rate?.source ? ' · ' + esc(state.rate.source) : ' · הערכה'}`;
+  return `<div class="page">
+    <h1 class="h1">סגירת חשבון</h1>
+    <div class="mute" style="font-size:15px">${locked ? '🔒 החשבון נסגר · הסכומים סופיים' : 'הטיול עדיין פתוח · הסכומים בשקלים משוערים'}</div>
+    <div class="lbl" style="font-weight:700">מצב כל אחת</div>${rows}
+    <div class="lbl" style="font-weight:700">העברות לסגירה</div>${trs}
+    <div class="grow"></div>
+    ${locked
+      ? `<button class="link" data-act="unlock">ביטול הנעילה</button>`
+      : `<button class="primary" data-act="lock" ${state.expenses.length ? '' : 'disabled'}>סגירת חשבון ונעילת שער</button>`}
+    <div class="xs mute" style="text-align:center;margin-top:8px">${rateLine}</div>
+    ${isAdmin ? `<button class="link" style="color:#B91C1C;margin-top:12px" data-act="reset">איפוס נתוני ניסיון</button>` : ''}
+  </div>${navHtml()}`;
+}
+
+// Add / edit screen
+function viewAdd() {
+  const f = state.form;
+  return `<div class="page">
+    <div class="row"><h1 class="h1" style="font-size:22px">${f.id ? 'עריכת הוצאה' : 'הוצאה חדשה'}</h1>
+      <button class="x" data-act="go" data-v="${f.back || 'home'}" aria-label="סגירה"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="row" style="margin-top:16px">
+      <input id="amt" class="amt" inputmode="decimal" placeholder="0" value="${f.amount}" aria-label="סכום" autocomplete="off">
+      <div class="seg" id="seg"></div>
+    </div>
+    <div class="sm mute" id="convLine" style="min-height:20px"></div>
+    <div id="chips"></div>
+    <label class="lbl" for="desc" style="display:block">תיאור (לא חובה)</label>
+    <input id="desc" class="txt" placeholder="למשל: ארוחת ערב" value="${esc(f.desc)}" maxlength="60">
+    <div class="grow"></div>
+    <button class="primary" data-act="save" style="margin-top:20px">שמירה</button>
+    ${f.id ? `<button class="link" style="color:#B91C1C;margin-top:6px" data-act="del">מחיקת ההוצאה</button>` : ''}
+  </div>`;
+}
+function renderAddParts() {
+  const f = state.form;
+  document.getElementById('seg').innerHTML = ['EUR', 'ILS'].map((c) => `<button data-act="cur" data-v="${c}" class="${f.currency === c ? 'on' : ''}" aria-label="${c === 'EUR' ? 'יורו' : 'שקל'}">${c === 'EUR' ? '€' : '₪'}</button>`).join('');
+  const cat = Object.entries(CATS).map(([k, C]) => `<button class="chip ${f.category === k ? 'on' : ''}" data-act="cat" data-v="${k}" style="background:${C.t};color:${C.c};border-color:${f.category === k ? C.c : 'transparent'}">${C.name}</button>`).join('');
+  const payer = IDS.map((p) => {
+    const P = PEOPLE[p], on = f.payer === p;
+    return `<button class="chip ${on ? 'on' : ''}" data-act="payer" data-v="${p}" style="background:${on ? P.c : '#fff'};color:${on ? '#fff' : P.c};border-color:${on ? P.c : P.b}">${p === me ? 'אני' : P.name}</button>`;
+  }).join('');
+  const split = IDS.map((p) => {
+    const P = PEOPLE[p], on = f.split.includes(p);
+    return `<button class="chip ${on ? 'on' : ''}" data-act="split" data-v="${p}" style="background:${on ? P.t : '#fff'};color:${on ? P.c : '#9A9A9A'};border-color:${on ? P.c : '#E0E0E0'}">${on ? '✓ ' : ''}${P.name}</button>`;
+  }).join('');
+  document.getElementById('chips').innerHTML = `
+    <div class="lbl">קטגוריה</div><div class="g3">${cat}</div>
+    <div class="lbl">מי שילמה</div><div class="g3">${payer}</div>
+    <div class="lbl">מתחלקות (שווה בשווה)</div><div class="g3">${split}</div>
+    <div class="sm mute" id="perLine" style="margin-top:8px;min-height:20px"></div>`;
+  updateLines();
+}
+function parseAmt() { return parseFloat(String(state.form.amount).replace(',', '.')) || 0; }
+function updateLines() {
+  const f = state.form, a = parseAmt(), r = rateNow();
+  const cl = document.getElementById('convLine'), pl = document.getElementById('perLine');
+  if (cl) cl.innerHTML = a ? (f.currency === 'EUR' ? `≈ ${money(a * r, 'ILS')} · לפי השער של היום` : `≈ ${money(a / r)}`) : '';
+  if (pl) pl.innerHTML = a && f.split.length ? `כל אחת: ${money(a / f.split.length, f.currency)}` : (f.split.length ? '' : 'צריך לבחור לפחות אחת');
+}
+
+// ---------- Render ----------
+function render() {
+  if (!me || !PEOPLE[me]) { $app.innerHTML = viewPicker(); return; }
+  if (state.view === 'add') {
+    $app.innerHTML = viewAdd(); renderAddParts();
+    const amt = document.getElementById('amt');
+    amt.addEventListener('input', () => { state.form.amount = amt.value; updateLines(); });
+    document.getElementById('desc').addEventListener('input', (e) => { state.form.desc = e.target.value; });
+    if (!state.form.id) setTimeout(() => amt.focus(), 50);
+    return;
+  }
+  $app.innerHTML = state.view === 'list' ? viewList() : state.view === 'settle' ? viewSettle() : viewHome();
+}
+function go(v) { state.view = v; render(); window.scrollTo(0, 0); }
+
+function unlockIfLocked() {
+  if (state.meta.locked) {
+    setDoc(metaDoc, { locked: false }, { merge: true }).catch(fail);
+    toast('הנעילה בוטלה – צריך לסגור חשבון מחדש');
+    return true;
+  }
+  return false;
+}
+
+// ---------- Events ----------
+document.addEventListener('click', async (ev) => {
+  const el = ev.target.closest('[data-act]'); if (!el || el.disabled) return;
+  const act = el.dataset.act, v = el.dataset.v, f = state.form;
+  switch (act) {
+    case 'go': go(v); break;
+    case 'add':
+      state.form = { amount: '', currency: 'EUR', category: 'food', desc: '', payer: me, split: [...IDS], back: state.view };
+      go('add'); break;
+    case 'edit': {
+      const e = state.expenses.find((x) => x.id === el.dataset.id); if (!e) return;
+      state.form = { id: e.id, amount: String(e.amount), currency: e.currency, category: e.category, desc: e.desc || '', payer: e.payer, split: [...e.split], day: e.day, back: state.view };
+      go('add'); break;
+    }
+    case 'cur': f.currency = v; renderAddParts(); break;
+    case 'cat': f.category = v; renderAddParts(); break;
+    case 'payer': f.payer = v; renderAddParts(); break;
+    case 'split':
+      f.split = f.split.includes(v) ? f.split.filter((p) => p !== v) : IDS.filter((p) => p === v || f.split.includes(p));
+      renderAddParts(); break;
+    case 'save': {
+      const amount = Math.round(parseAmt() * 100) / 100;
+      if (!(amount > 0)) { toast('צריך להזין סכום'); document.getElementById('amt').focus(); return; }
+      if (!f.split.length) { toast('צריך לבחור עם מי מתחלקים'); return; }
+      const data = { amount, currency: f.currency, category: f.category, desc: f.desc.trim(), payer: f.payer, split: f.split };
+      if (f.id) updateDoc(doc(expCol, f.id), { ...data, updatedAt: Date.now() }).catch(fail);
+      else addDoc(expCol, { ...data, createdBy: me, createdAt: Date.now(), day: isoDate(new Date()) }).catch(fail);
+      if (!unlockIfLocked()) toast(f.id ? 'עודכן ✓' : 'נשמר ✓');
+      go(f.back || 'home'); break;
+    }
+    case 'del':
+      if (!confirm('למחוק את ההוצאה?')) return;
+      deleteDoc(doc(expCol, f.id)).catch(fail);
+      if (!unlockIfLocked()) toast('נמחק');
+      go(f.back || 'home'); break;
+    case 'filter': state.filter = v; render(); break;
+    case 'paid': {
+      const k = el.dataset.k, a = Number(el.dataset.a), cur = (state.meta.paid || {})[k];
+      const on = cur && Math.abs(cur - a) <= 1;
+      setDoc(metaDoc, { paid: { [k]: on ? 0 : a } }, { merge: true }).catch(fail); break;
+    }
+    case 'lock': {
+      if (!confirm('לסגור את החשבון? השער של היום יינעל לכולן.')) return;
+      el.disabled = true; el.textContent = 'מביאה שער…';
+      const r = await fetchRate(true);
+      let value = r?.fetched === isoDate(new Date()) ? r.value : null, source = r?.source || '';
+      if (!value) {
+        const m = prompt('לא הצלחתי להביא את השער היציג. מה השער (₪ ליורו)?', String(rateNow()));
+        value = parseFloat(String(m || '').replace(',', '.'));
+        if (!(value > 2 && value < 7)) { toast('לא ננעל'); render(); return; }
+        source = 'הוזן ידנית';
+      }
+      setDoc(metaDoc, { locked: true, lockedRate: value, lockedSource: source, lockedDate: r?.date || isoDate(new Date()), lockedBy: me }, { merge: true }).catch(fail);
+      toast('החשבון נסגר 🔒'); break;
+    }
+    case 'unlock':
+      if (!confirm('לבטל את הנעילה? השער יחזור להתעדכן כל יום.')) return;
+      setDoc(metaDoc, { locked: false }, { merge: true }).catch(fail); break;
+    case 'reset': {
+      if (!confirm('למחוק את כל ההוצאות ואת מצב סגירת החשבון? אי אפשר לשחזר.')) return;
+      const snap = await getDocs(expCol);
+      await Promise.all(snap.docs.map((d) => deleteDoc(d.ref)));
+      await setDoc(metaDoc, { locked: false, paid: {}, rate: state.rate || null });
+      toast('הנתונים אופסו'); break;
+    }
+  }
+});
+
+// ---------- Start ----------
+render();
+if (me && PEOPLE[me]) {
+  onSnapshot(expCol, (snap) => {
+    state.expenses = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+      .filter((e) => e.amount > 0 && Array.isArray(e.split))
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    state.loaded = true;
+    if (state.view !== 'add') render();
+  }, (e) => { console.error(e); toast('אין חיבור לשרת'); });
+  onSnapshot(metaDoc, (snap) => {
+    state.meta = snap.data() || {};
+    if (!state.rate && state.meta.rate) state.rate = state.meta.rate;
+    if (state.view !== 'add') render();
+  }, () => {});
+  fetchRate().then(() => { if (state.view !== 'add') render(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) fetchRate().then(() => { if (state.view !== 'add') render(); }); });
+}
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>

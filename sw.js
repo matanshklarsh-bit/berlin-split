@@ -1,5 +1,5 @@
 // Offline support: app files network-first, libraries cache-first.
-const CACHE = 'berlin-v1';
+const CACHE = 'berlin-v2';
 const SHELL = ['./', './index.html', './manifest.json', './icons/icon-192.png', './icons/icon-180.png'];
 
 self.addEventListener('install', (e) => {
@@ -19,7 +19,7 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   // Firestore traffic and exchange-rate calls are handled by the app itself.
-  if (url.hostname.includes('firestore.googleapis.com') || url.hostname.includes('boi.org.il') || url.hostname.includes('frankfurter')) return;
+  if (url.hostname.includes('firestore.googleapis.com') || url.hostname.includes('boi.org.il') || url.hostname.includes('frankfurter') || url.hostname.includes('er-api') || url.pathname.endsWith('rate.json')) return;
 
   if (url.hostname === 'www.gstatic.com' || url.hostname === 'fonts.gstatic.com' || url.hostname === 'fonts.googleapis.com') {
     e.respondWith(

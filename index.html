@@ -177,13 +177,21 @@ async function getJson(url) {
 async function fetchRate(force) {
   const today = isoDate(new Date());
   if (!force && state.rate && state.rate.fetched === today) return state.rate;
+  const ok = (v) => typeof v === 'number' && v > 2 && v < 7;
+  const BOI = 'שער יציג – בנק ישראל';
+  const sources = [
+    // 1. rate.json in this site, refreshed daily from Bank of Israel by a GitHub Action
+    async () => { const j = await getJson('rate.json?t=' + Date.now()); return ok(j?.value) && { value: j.value, date: j.date, source: BOI }; },
+    // 2. Bank of Israel representative rate via Frankfurter (browser-friendly)
+    async () => { const j = await getJson('https://api.frankfurter.dev/v2/providers/boi/rates?base=EUR&quotes=ILS'); const r = (Array.isArray(j) ? j : []).find((x) => x.quote === 'ILS'); return r && ok(r.rate) && { value: r.rate, date: r.date, source: BOI }; },
+    // 3. Bank of Israel directly
+    async () => { const r = pickBoi(await getJson('https://boi.org.il/PublicApi/GetExchangeRates?asJson=true')); return r && ok(r.value) && { ...r, source: BOI }; },
+    // 4. Fallbacks (not the representative rate, but close)
+    async () => { const j = await getJson('https://api.frankfurter.dev/v1/latest?base=EUR&symbols=ILS'); return ok(j?.rates?.ILS) && { value: j.rates.ILS, date: j.date, source: 'שער ECB (בנק ישראל לא זמין)' }; },
+    async () => { const j = await getJson('https://open.er-api.com/v6/latest/EUR'); return ok(j?.rates?.ILS) && { value: j.rates.ILS, date: isoDate(new Date()), source: 'שער שוק (בנק ישראל לא זמין)' }; }
+  ];
   let got = null;
-  for (const url of ['https://boi.org.il/PublicApi/GetExchangeRate?key=EUR&asJson=true', 'https://boi.org.il/PublicApi/GetExchangeRates?asJson=true']) {
-    try { const r = pickBoi(await getJson(url)); if (r && r.value > 2 && r.value < 7) { got = { ...r, source: 'שער יציג – בנק ישראל' }; break; } } catch {}
-  }
-  if (!got) {
-    try { const j = await getJson('https://api.frankfurter.app/latest?from=EUR&to=ILS'); if (j?.rates?.ILS) got = { value: j.rates.ILS, date: j.date, source: 'שער ECB (בנק ישראל לא זמין)' }; } catch {}
-  }
+  for (const s of sources) { try { got = await s(); } catch { got = null; } if (got) break; }
   if (got) {
     got.fetched = today; state.rate = got; lsSet('rate', got);
     if (!state.meta.rate || state.meta.rate.fetched !== today) setDoc(metaDoc, { rate: got }, { merge: true }).catch(() => {});
@@ -351,6 +359,7 @@ function viewSettle() {
       ? `<button class="link" data-act="unlock">ביטול הנעילה</button>`
       : `<button class="primary" data-act="lock" ${state.expenses.length ? '' : 'disabled'}>סגירת חשבון ונעילת שער</button>`}
     <div class="xs mute" style="text-align:center;margin-top:8px">${rateLine}</div>
+    ${locked ? '' : `<button class="link xs" style="font-size:13px;padding:6px" data-act="manualRate">עדכון שער ידני</button>`}
     ${isAdmin ? `<button class="link" style="color:#B91C1C;margin-top:12px" data-act="reset">איפוס נתוני ניסיון</button>` : ''}
   </div>${navHtml()}`;
 }
@@ -479,6 +488,16 @@ document.addEventListener('click', async (ev) => {
       }
       setDoc(metaDoc, { locked: true, lockedRate: value, lockedSource: source, lockedDate: r?.date || isoDate(new Date()), lockedBy: me }, { merge: true }).catch(fail);
       toast('החשבון נסגר 🔒'); break;
+    }
+    case 'manualRate': {
+      const m = prompt('מה השער היציג של היום (₪ ליורו)?', String(rateNow()));
+      const value = parseFloat(String(m || '').replace(',', '.'));
+      if (!(value > 2 && value < 7)) return;
+      const today = isoDate(new Date());
+      state.rate = { value, date: today, source: 'הוזן ידנית', fetched: today };
+      lsSet('rate', state.rate);
+      setDoc(metaDoc, { rate: state.rate }, { merge: true }).catch(fail);
+      render(); toast('השער עודכן'); break;
     }
     case 'unlock':
       if (!confirm('לבטל את הנעילה? השער יחזור להתעדכן כל יום.')) return;
